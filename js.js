@@ -119,7 +119,7 @@ function hasCorrectAnswer(comments, str) {
             console.log("match!");
             return true;
         }
-    });
+    }
     return false;
 }
 
