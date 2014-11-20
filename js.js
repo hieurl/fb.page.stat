@@ -135,7 +135,7 @@ function getLuckyNumber(lucky_number_array) {
     var count=0;
     while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat) && count <= numbers.length+1) {
         rand+=1;
-        lucky_number=number[rand%numbers.length];
+        lucky_number=numbers[rand%numbers.length];
         count+=1;
     }
 
