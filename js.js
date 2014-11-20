@@ -110,7 +110,7 @@ function loadPage(page_name) {
 
 function getLuckyNumber(lucky_number_array) {
     var numbers=Object.keys(lucky_number_array);
-    var lucky_number=numbers[Match.floor(Math.random()*numbers.length)];
+    var lucky_number=numbers[Math.floor(Math.random()*numbers.length)];
 
     var winner="";
     lucky_number_array[lucky_number].forEach(function(p) {
