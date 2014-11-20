@@ -112,10 +112,11 @@ function hasCorrectAnswer(comments, str) {
     var message;
     var regex=new RegExp(str, 'i');
     console.log(regex);
-    comments.forEach(function(comment){ 
-        message=comment.message;
+    for (var i=0; i < comments.length; i++) {
+        message=comments[i].message;
         console.log(message.match(regex));
         if(message.match(regex) != null) {
+            console.log("match!");
             return true;
         }
     });
@@ -135,7 +136,8 @@ function getLuckyNumber(lucky_number_array) {
     var pat=document.getElementById('txt_pattern').value;
     console.log('Pattern '+pat);
     var count=0;
-    while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat) && count <= numbers.length+1) {
+    while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat)) {
+        if (count > numbers.length) {break;}
         rand+=1;
         lucky_number=numbers[rand%numbers.length];
         count+=1;
