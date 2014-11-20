@@ -1,38 +1,61 @@
 <!DOCTYPE html>
-<html>
-<head>
-<script src='js/fb.page.stat.js'></script>
-<script>
-function abc() {
-    checkLoginState();
-    return false;
-}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src='js/fb.page.stat.js'></script>
+        <script>
+            function abc() {
+                checkLoginState();
+                return false;
+            }
 
-function abcd() {
-    checkLoginState2();
-}
+            function abcd() {
+                checkLoginState2();
+            }
 
-function onFBLogin() {
-    document.getElementById('status').innerHTML = '';
-}
-</script>
-</head>
-<body>
-    <div id='fb_login'>
-        <fb:login-button scope="public_profile,email" onlogin="onFBLogin();">
-        </fb:login-button>
-    </div>
-    <div>
-        <form action="" method="POST">
-            <input type="text" id="page_name" value="page name..." /> <input type='button' onClick='abc();' value="Get"/>
-            <input type="text" id="post_id" value="photo/post id..." /> 
-            <input type='text' id='txt_pattern' value="answers...">
-            <input type='button' onClick='abcd();' value="Get"/>
-        </form>
-    </div>
-    <div id="status"></div>
-    <div id="posts"></div>
-    
+            function onFBLogin() {
+                document.getElementById('status').innerHTML = '';
+            }
+        </script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fb.page.stat.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class='container'>
+            <div id='fb_login'>
+                <fb:login-button scope="public_profile,email" onlogin="onFBLogin();">
+                </fb:login-button>
+            </div>
+            <div class="fb_form_container .col-md-8">
+                <form action="" method="POST" class="form-inline">
+                    <div class="form-line row">
+                        <label for="page_name">http://facebook.com/</label>
+                        <input type="text" id="page_name" class="form-control" 
+                                                                              placeholder="page name..." />
+                        <input type='button' onClick='abc();' class="btn btn-default" value="Get"/>
+                    </div>
+                    <div class="form-line row">
+                        <h4>Or</h4>
+                    </div>
+                    <div class="form-line row">
+                        <input type="text" class="form-control" id="post_id" placeholder="photo url..." /> 
+                        <input type='button' class="btn btn-default" value="Next"/>
+                    </div>
+                    <div class="form-line row">
+                        <input type='text' class="form-control" id='txt_pattern' placeholder="answers...">
+                        <input type='button' onClick='abcd();' class="btn btn-default" value="Get"/>
+                    </div>
+                </form>
+            </div>
+            <div id="status" class="lead"></div>
+            <div id="posts"></div>
+        </div>
 
-</body>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+    </body>
 </html>
