@@ -111,8 +111,10 @@ function loadPage(page_name) {
 function hasCorrectAnswer(comments, str) {
     var message;
     var regex=new RegExp(str, 'i');
+    console.log(regex);
     comments.forEach(function(comment){ 
         message=comment.message;
+        console.log(message);
         if(message.match(regex)) {
             return true;
         }
