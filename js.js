@@ -108,20 +108,50 @@ function loadPage(page_name) {
 
 }
 
+function hasCorrectAnswer(comments, str) {
+    var message;
+    var regex=new RegExp(str, 'i');
+    comments.forEach(function(comment){ 
+        message=comment.message;
+        if(message.match(regex)) {
+            return true;
+        }
+    });
+    return false;
+}
+
 function getLuckyNumber(lucky_number_array) {
     console.log(lucky_number_array);
     var numbers=Object.keys(lucky_number_array);
     console.log(numbers);
-    var lucky_number=numbers[Math.floor(Math.random()*numbers.length)];
+
+    // get answer pattern
+    var rand=Math.floor(Math.random()*numbers.length);
+    var lucky_number=numbers[rand];
     console.log(lucky_number);
 
+    var pat=document.getElementById('txt_pattern').value;
+    console.log('Pattern '+pat);
+    var count=0;
+    while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat) && count <= numbers.length+1) {
+        rand+=1;
+        lucky_number=number[rand%numbers.length];
+        count+=1;
+    }
+
     var winner="";
-    lucky_number_array[lucky_number].forEach(function(p) {
-        winner+="Name: "+p.from.name+"\n"+
-            "Comment: "+p.message+"\n"+
-            "Time: "+p.created_time+"\r\n";
-    });
-    alert('Lucky number: '+lucky_number+'\r\n'+winner);
+    if(count > numbers.length) {
+        winner="<h4>No one has correct answer :(</h4>";
+    } else {
+        winner="Lucky number:<br/> <h4>"+lucky_number+"</h4>";
+        lucky_number_array[lucky_number].forEach(function(p) {
+            winner+="Name: "+p.from.name+"<br/>"+
+                "Comment: "+p.message+"<br/>"+
+                "Time: "+p.created_time+"<br/><br/>";
+        });
+    }
+    document.getElementById('posts').innerHTML=winner;
+    //alert('Lucky number: '+lucky_number+'\r\n'+winner);
 }
 
 function writeToCSV_onlyComment(comment_array) {
