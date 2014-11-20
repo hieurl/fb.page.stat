@@ -113,11 +113,11 @@ function getLuckyNumber(lucky_number_array) {
     var lucky_number=numbers[Match.floor(Math.random()*numbers.length)];
 
     var winner="";
-    lucky_number_array[lucky_number].forEach(p) {
+    lucky_number_array[lucky_number].forEach(function(p) {
         winner+="Name: "+p.from.name+"\r\n"+
             "Comment: "+p.message+"\r\n"+
             "Time: "+p.created_time+"\r\n";
-    }
+    });
     alert('Lucky number: '+lucky_number+'\r\n'+winner);
 }
 
