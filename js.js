@@ -108,15 +108,40 @@ function loadPage(page_name) {
 
 }
 
+function getLuckyNumber(lucky_number_array) {
+    var numbers=Object.keys(lucky_number_array);
+    var lucky_number=numbers[Match.floor(Math.random()*numbers.length)];
+
+    var winner="";
+    lucky_number_array[lucky_number].forEach(p) {
+        winner+="Name: "+p.from.name+"\r\n"+
+            "Comment: "+p.message+"\r\n"+
+            "Time: "+p.created_time+"\r\n";
+    }
+    alert('Lucky number: '+lucky_number+'\r\n'+winner);
+}
+
 function writeToCSV_onlyComment(comment_array) {
     var csvContent = "data:text/csv;charset=utf-8,";
     //var csvContent = "data:text/csv;";
+    //
+    //for randomize lucky number
+    var lucky_number_array={};
+
     comment_array.forEach(function(comment, index) {
         var number=comment.message.split('\ ');
         number=number[number.length-1];
-        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+comment.from.id+"\"", "", "", "", "", 
-                        "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
-        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
+
+        if(typeof(number) === 'number') {
+            if(typeof(lucky_number_array[number]) == 'undefined') {
+                lucky_number_array[number]=[];
+            }
+            lucky_number_array[number].push(comment);
+            dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
+                            comment.from.id+"\"", "", "", "", "", 
+                            "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
+            csvContent += index < comment_array.length ? dataString+"\n" : dataString;
+        }
     });
     //console.log(csvContent);
 
@@ -127,6 +152,7 @@ function writeToCSV_onlyComment(comment_array) {
 
     link.click(); // This will download the data file named "my_data.csv"."
     document.getElementById("status").innerHTML="";
+    getLuckyNumber(lucky_number_array);
 }
 
 function writeToCSV(comment_array, commenters) {
