@@ -159,8 +159,8 @@ function getLuckyNumber(lucky_number_array) {
             var keyA=new Date(a.created_time);
             var keyB=new Date(b.created_time);
 
-            if(keyA<keyB) { return 1;}
-            if(keyA>keyB) { return -1;}
+            if(keyA<keyB) { return -1;}
+            if(keyA>keyB) { return 1;}
             return 0;
         });
         lucky_comment.forEach(function(p) {
