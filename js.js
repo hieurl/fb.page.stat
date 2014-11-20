@@ -44,6 +44,8 @@ function statusChangeCallback2(response) {
         var regex=/https?:\/\/(www.)?facebook\.com\/([a-zA-Z0-9_\- ]*)\/([a-zA-Z0-9_\- ]*)\/([a-zA-Z0-9_\.\-]*)\/([a-zA-Z0-9_\-]*)(\/\?type=1&theater\/)?/i;
         post_id=post_id.match(regex)[5];
         console.log(post_id);
+
+        document.getElementById("status").innerHTML="Loading...";
         loadComment('/'+post_id,[]);
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
