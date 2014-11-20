@@ -159,8 +159,8 @@ function getLuckyNumber(lucky_number_array) {
             var keyA=new Date(a.created_time);
             var keyB=new Date(b.created_time);
 
-            if(keyA<keyB) { return -1;}
-            if(keyA>keyB) { return 1;}
+            if(keyA<keyB) { return 1;}
+            if(keyA>keyB) { return -1;}
             return 0;
         });
         lucky_comment.forEach(function(p) {
@@ -186,6 +186,12 @@ function writeToCSV_onlyComment(comment_array) {
 
         console.log(number);
         console.log(typeof(number));
+        
+        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
+                        comment.from.id+"\"", "", "", "", "", 
+                        "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
+        console.log(dataString);
+        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
 
         try {
             if (isNaN(parseInt(number))) {
@@ -193,7 +199,6 @@ function writeToCSV_onlyComment(comment_array) {
             }
             if(typeof(lucky_number_array[number]) == 'undefined') {
                 lucky_number_array[number]=[];
-                console.log("Hello");
             } else {
                 console.log(typeof(lucky_number_array[number]));
             }
@@ -201,12 +206,8 @@ function writeToCSV_onlyComment(comment_array) {
         } catch (err) {
             console.log(err);
         }
-        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
-                        comment.from.id+"\"", "", "", "", "", 
-                        "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
-        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
     });
-    //console.log(csvContent);
+    console.log(csvContent);
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
