@@ -1,0 +1,12 @@
+.fb_form_container {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.form-line {
+    padding: 10px;
+}
+
+#post_id, #txt_pattern {
+    width: 370px;
+}

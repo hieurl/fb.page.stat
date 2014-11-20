@@ -14,7 +14,6 @@ window.fbAsyncInit = function() {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-// This is called with the results from from FB.getLoginStatus()
 function statusChangeCallback(response) {
     //console.log(response);
     if (response.status === 'connected') {
@@ -36,7 +35,6 @@ function statusChangeCallback(response) {
 }
 
 
-// This is called with the results from from FB.getLoginStatus()
 function statusChangeCallback2(response) {
     //console.log(response);
     if (response.status === 'connected') {
