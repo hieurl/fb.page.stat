@@ -28,6 +28,7 @@ function statusChangeCallback(response) {
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+           
     } else {
         document.getElementById('status').innerHTML = 'Please log ' +
             'into Facebook.';
@@ -43,6 +44,7 @@ function statusChangeCallback2(response) {
         var regex=/https?:\/\/(www.)?facebook\.com\/([a-zA-Z0-9_\- ]*)\/([a-zA-Z0-9_\- ]*)\/([a-zA-Z0-9_\.\-]*)\/([a-zA-Z0-9_\-]*)(\/\?type=1&theater\/)?/i;
         post_id=post_id.match(regex)[5];
         console.log(post_id);
+
         document.getElementById("status").innerHTML="Loading...";
         loadComment('/'+post_id,[]);
     } else if (response.status === 'not_authorized') {
@@ -106,17 +108,106 @@ function loadPage(page_name) {
 
 }
 
+function hasCorrectAnswer(comments, str) {
+    var message;
+    var regex=new RegExp(str, 'i');
+    console.log(regex);
+    var index;
+    for (var i=0; i < comments.length; i++) {
+        message=comments[i].message;
+        index=message.lastIndexOf(" ");
+        message=message.substring(0,index);
+
+        console.log(message.match(regex));
+        if(message.match(regex) != null) {
+            console.log("match!");
+            return true;
+        }
+    }
+    return false;
+}
+
+function getLuckyNumber(lucky_number_array) {
+    console.log(lucky_number_array);
+    var numbers=Object.keys(lucky_number_array);
+    console.log(numbers);
+
+    // get answer pattern
+    var rand=Math.floor(Math.random()*numbers.length);
+    var lucky_number=numbers[rand];
+    console.log(lucky_number);
+
+    var pat=document.getElementById('txt_pattern').value;
+    console.log('Pattern '+pat);
+    var count=0;
+    while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat)) {
+        if (count > numbers.length) {break;}
+        rand+=1;
+        lucky_number=numbers[rand%numbers.length];
+        count+=1;
+    }
+
+    var winner="";
+    if(count > numbers.length) {
+        winner="<h4>No one has correct answer :(</h4>";
+    } else {
+
+        winner="Lucky number:<br/> <h4>"+lucky_number+"</h4>";
+
+        lucky_comment=lucky_number_array[lucky_number];
+        lucky_comment.sort(function(a,b) {
+            var keyA=new Date(a.created_time);
+            var keyB=new Date(b.created_time);
+
+            if(keyA<keyB) { return 1;}
+            if(keyA>keyB) { return -1;}
+            return 0;
+        });
+        lucky_comment.forEach(function(p) {
+            winner+="Name: "+p.from.name+"<br/>"+
+                "Comment: "+p.message+"<br/>"+
+                "Time: "+p.created_time+"<br/><br/>";
+        });
+    }
+    document.getElementById('posts').innerHTML=winner;
+    //alert('Lucky number: '+lucky_number+'\r\n'+winner);
+}
+
 function writeToCSV_onlyComment(comment_array) {
     var csvContent = "data:text/csv;charset=utf-8,";
     //var csvContent = "data:text/csv;";
+    //
+    //for randomize lucky number
+    var lucky_number_array={};
+
     comment_array.forEach(function(comment, index) {
         var number=comment.message.split('\ ');
         number=number[number.length-1];
-        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+comment.from.id+"\"", "", "", "", "", 
+
+        console.log(number);
+        console.log(typeof(number));
+        
+        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
+                        comment.from.id+"\"", "", "", "", "", 
                         "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
+        console.log(dataString);
         csvContent += index < comment_array.length ? dataString+"\n" : dataString;
+
+        try {
+            if (isNaN(parseInt(number))) {
+                throw number+" is not a number";
+            }
+            if(typeof(lucky_number_array[number]) == 'undefined') {
+                lucky_number_array[number]=[];
+            } else {
+                console.log(typeof(lucky_number_array[number]));
+            }
+            lucky_number_array[number].push(comment);
+        } catch (err) {
+            console.log(err);
+        }
     });
-    //console.log(csvContent);
+    console.log(csvContent);
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
@@ -125,6 +216,7 @@ function writeToCSV_onlyComment(comment_array) {
 
     link.click(); // This will download the data file named "my_data.csv"."
     document.getElementById("status").innerHTML="";
+    getLuckyNumber(lucky_number_array);
 }
 
 function writeToCSV(comment_array, commenters) {
