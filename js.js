@@ -28,6 +28,7 @@ function statusChangeCallback(response) {
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+           
     } else {
         document.getElementById('status').innerHTML = 'Please log ' +
             'into Facebook.';
