@@ -10,3 +10,11 @@
 #post_id, #txt_pattern {
     width: 370px;
 }
+
+#posts {
+    padding-left:300px;
+    padding-right:100px;
+}
+#status {
+    text-align: center;
+}
