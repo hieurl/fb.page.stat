@@ -113,6 +113,8 @@ function hasCorrectAnswer(comments, str) {
     var regex=new RegExp(str, 'i');
     console.log(regex);
     var index;
+    
+    var matches=[];
     for (var i=0; i < comments.length; i++) {
         message=comments[i].message;
         index=message.lastIndexOf(" ");
@@ -121,10 +123,10 @@ function hasCorrectAnswer(comments, str) {
         console.log(message.match(regex));
         if(message.match(regex) != null) {
             console.log("match!");
-            return true;
+            matches.push(comments[i]);
         }
     }
-    return false;
+    return matches;
 }
 
 function getLuckyNumber(lucky_number_array) {
@@ -140,11 +142,13 @@ function getLuckyNumber(lucky_number_array) {
     var pat=document.getElementById('txt_pattern').value;
     console.log('Pattern '+pat);
     var count=0;
-    while(! hasCorrectAnswer(lucky_number_array[lucky_number], pat)) {
-        if (count > numbers.length) {break;}
-        rand+=1;
-        lucky_number=numbers[rand%numbers.length];
-        count+=1;
+
+    var lucky_comment=hasCorrectAnswer(lucky_number_array[lucky_number], pat);
+    while(lucky_comment.length==0) {
+        if (count++ > numbers.length) {break;}
+        
+        lucky_number=numbers[++rand%numbers.length];
+        lucky_comment=hasCorrectAnswer(lucky_number_array[lucky_number], pat);
     }
 
     var winner="";
@@ -154,13 +158,13 @@ function getLuckyNumber(lucky_number_array) {
 
         winner="Lucky number:<br/> <h4>"+lucky_number+"</h4>";
 
-        lucky_comment=lucky_number_array[lucky_number];
+        //lucky_comment=lucky_number_array[lucky_number];
         lucky_comment.sort(function(a,b) {
             var keyA=new Date(a.created_time);
             var keyB=new Date(b.created_time);
 
-            if(keyA<keyB) { return 1;}
-            if(keyA>keyB) { return -1;}
+            if(keyA<keyB) { return -1;}
+            if(keyA>keyB) { return 1;}
             return 0;
         });
         lucky_comment.forEach(function(p) {
