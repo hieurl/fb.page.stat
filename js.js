@@ -144,7 +144,7 @@ function getLuckyNumber(lucky_number_array) {
     var count=0;
 
     var lucky_comment=hasCorrectAnswer(lucky_number_array[lucky_number], pat);
-    while(comment.length==0) {
+    while(lucky_comment.length==0) {
         if (count++ > numbers.length) {break;}
         
         lucky_number=numbers[++rand%numbers.length];
