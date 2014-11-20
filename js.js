@@ -109,8 +109,11 @@ function loadPage(page_name) {
 }
 
 function getLuckyNumber(lucky_number_array) {
+    console.log(lucky_number_array);
     var numbers=Object.keys(lucky_number_array);
+    console.log(numbers);
     var lucky_number=numbers[Math.floor(Math.random()*numbers.length)];
+    console.log(lucky_number);
 
     var winner="";
     lucky_number_array[lucky_number].forEach(function(p) {
