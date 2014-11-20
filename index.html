@@ -11,9 +11,17 @@ function abc() {
 function abcd() {
     checkLoginState2();
 }
+
+function onFBLogin() {
+    document.getElementById('status').innerHTML = '';
+}
 </script>
 </head>
 <body>
+    <div id='fb_login'>
+        <fb:login-button scope="public_profile,email" onlogin="onFBLogin();">
+        </fb:login-button>
+    </div>
     <div>
         <form action="" method="POST">
             <input type="text" id="page_name" value="page name..." /> <input type='button' onClick='abc();' value="Get"/>
