@@ -114,8 +114,8 @@ function hasCorrectAnswer(comments, str) {
     console.log(regex);
     comments.forEach(function(comment){ 
         message=comment.message;
-        console.log(message);
-        if(message.match(regex)) {
+        console.log(message.match(regex));
+        if(message.match(regex) != null) {
             return true;
         }
     });
