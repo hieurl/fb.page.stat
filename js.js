@@ -112,8 +112,12 @@ function hasCorrectAnswer(comments, str) {
     var message;
     var regex=new RegExp(str, 'i');
     console.log(regex);
+    var index;
     for (var i=0; i < comments.length; i++) {
         message=comments[i].message;
+        index=message.lastIndexOf(" ");
+        message=message.substring(0,index);
+
         console.log(message.match(regex));
         if(message.match(regex) != null) {
             console.log("match!");
@@ -147,8 +151,19 @@ function getLuckyNumber(lucky_number_array) {
     if(count > numbers.length) {
         winner="<h4>No one has correct answer :(</h4>";
     } else {
+
         winner="Lucky number:<br/> <h4>"+lucky_number+"</h4>";
-        lucky_number_array[lucky_number].forEach(function(p) {
+
+        lucky_comment=lucky_number_array[lucky_number];
+        lucky_comment.sort(function(a,b) {
+            var keyA=new Date(a.created_time);
+            var keyB=new Date(b.created_time);
+
+            if(keyA<keyB) { return -1;}
+            if(keyA>keyB) { return 1;}
+            return 0;
+        });
+        lucky_comment.forEach(function(p) {
             winner+="Name: "+p.from.name+"<br/>"+
                 "Comment: "+p.message+"<br/>"+
                 "Time: "+p.created_time+"<br/><br/>";
@@ -183,13 +198,13 @@ function writeToCSV_onlyComment(comment_array) {
                 console.log(typeof(lucky_number_array[number]));
             }
             lucky_number_array[number].push(comment);
-            dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
-                            comment.from.id+"\"", "", "", "", "", 
-                            "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
-            csvContent += index < comment_array.length ? dataString+"\n" : dataString;
         } catch (err) {
             console.log(err);
         }
+        dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
+                        comment.from.id+"\"", "", "", "", "", 
+                        "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
+        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
     });
     //console.log(csvContent);
 
