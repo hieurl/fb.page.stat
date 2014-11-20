@@ -22,7 +22,7 @@ function statusChangeCallback(response) {
         //loadPage('STARMoviesAsia');
         var page_name=document.getElementById("page_name").value;
         console.log(page_name);
-        document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' />";
+        document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' width='40%'/>";
         loadPage(page_name);
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
@@ -44,8 +44,8 @@ function statusChangeCallback2(response) {
         console.log(post_id);
 
         //document.getElementById("status").innerHTML="Loading...";
-        document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' />";
         loadComment('/'+post_id,[]);
+        document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' width='40%'/>";
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
@@ -299,7 +299,7 @@ function loadStat(e) {
     console.log(post_id);
 
     //document.getElementById("status").innerHTML="Loading...";
-    document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' />";
+    document.getElementById("status").innerHTML="<img src='images/ajax-loader.gif' width='40%' />";
     loadComment('/'+post_id,[]);
 }
 
