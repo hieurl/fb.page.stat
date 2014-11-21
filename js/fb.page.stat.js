@@ -134,8 +134,12 @@ function getLuckyNumber(lucky_number_array) {
     console.log(numbers);
 
     // get answer pattern
-    var rand=Math.floor(Math.random()*numbers.length);
-    var lucky_number=numbers[rand];
+    var rand, lucky_number;
+    do {
+        rand=Math.floor(Math.random()*numbers.length);
+        lucky_number=numbers[rand];
+    } while(isNaN(parseInt(lucky_number)));
+
     console.log(lucky_number);
 
     var pat=document.getElementById('txt_pattern').value;
@@ -221,7 +225,9 @@ function writeToCSV_onlyComment(comment_array) {
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", "my_data.csv");
 
-    link.click(); // This will download the data file named "my_data.csv"."
+    if(document.getElementById('download_csv').checked==true) {
+        link.click(); // This will download the data file named "my_data.csv"."
+    }
     document.getElementById("status").innerHTML="";
     getLuckyNumber(lucky_number_array);
 }
@@ -290,9 +296,7 @@ function loadComment(api_url, comment_array) {
             } else {
                 console.log('done loading comments!');
                 //loadCommentFrom(comment_array);
-                if(document.getElementById('download_csv').checked==true) {
-                    writeToCSV_onlyComment(comment_array);
-                }
+                writeToCSV_onlyComment(comment_array);
             }
         }
     });
