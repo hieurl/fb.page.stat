@@ -18,3 +18,15 @@
 #status {
     text-align: center;
 }
+
+.help-text {
+    font-size: 10pt;
+    color: gray;
+    padding-top: 10px;
+}
+.help-link { 
+    padding-top: 5px;
+    text-decoration: bold;
+    font-size: 14pt;
+}
+
