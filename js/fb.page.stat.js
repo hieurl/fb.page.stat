@@ -177,7 +177,7 @@ function getLuckyNumber(lucky_number_array) {
 }
 
 function writeToCSV_onlyComment(comment_array) {
-    var csvContent = "data:text/csv;charset=utf-8,";
+    var csvContent = "data:text/csv;charset=utf-8,%EF%BB%BF";
     //var csvContent = "data:text/csv;";
     //
     //for randomize lucky number
