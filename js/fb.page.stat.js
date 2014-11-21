@@ -177,7 +177,7 @@ function getLuckyNumber(lucky_number_array) {
 }
 
 function writeToCSV_onlyComment(comment_array) {
-    var csvContent = "data:text/csv;charset=utf-8,%EF%BB%BF";
+    var csvContent = "data:text/csv;charset=utf-8,"+"\uFEFF";
     //var csvContent = "data:text/csv;";
     //
     //for randomize lucky number
@@ -194,10 +194,12 @@ function writeToCSV_onlyComment(comment_array) {
                         comment.from.id+"\"", "", "", "", "", 
                         "\""+comment.message+"\"", "\""+number+"\"", comment.created_time].join(",");
         console.log(dataString);
-        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
 
         try {
             if (isNaN(parseInt(number))) {
+                dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
+                                comment.from.id+"\"", "", "", "", "", 
+                                "\""+comment.message+"\"", "" , comment.created_time].join(",");
                 throw number+" is not a number";
             }
             if(typeof(lucky_number_array[number]) == 'undefined') {
@@ -209,6 +211,8 @@ function writeToCSV_onlyComment(comment_array) {
         } catch (err) {
             console.log(err);
         }
+
+        csvContent += index < comment_array.length ? dataString+"\n" : dataString;
     });
     console.log(csvContent);
 
@@ -286,7 +290,9 @@ function loadComment(api_url, comment_array) {
             } else {
                 console.log('done loading comments!');
                 //loadCommentFrom(comment_array);
-                writeToCSV_onlyComment(comment_array);
+                if(document.getElementById('download_csv').checked==true) {
+                    writeToCSV_onlyComment(comment_array);
+                }
             }
         }
     });
