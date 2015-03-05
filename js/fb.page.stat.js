@@ -191,8 +191,13 @@ function writeToCSV_onlyComment(comment_array) {
         var number=comment.message.split(/[-]+/);
         msg=number[number.length-2]
         number=number[number.length-1];
-        if (number[0] == " " || msg[msg.length-1]==" ") {
-            number="bullshitnumber";
+        try {
+            if (number[0] == " " || msg[msg.length-1]==" ") {
+                number="bullshitnumber";
+            }
+        }
+        catch (err) {
+            console.log(err);
         }
 
         console.log(number);
