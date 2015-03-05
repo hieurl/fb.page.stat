@@ -188,7 +188,7 @@ function writeToCSV_onlyComment(comment_array) {
     var lucky_number_array={};
 
     comment_array.forEach(function(comment, index) {
-        var number=comment.message.split(/[\ -]+/);
+        var number=comment.message.split(/[-]+/);
         number=number[number.length-1];
 
         console.log(number);
