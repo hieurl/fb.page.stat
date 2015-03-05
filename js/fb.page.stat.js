@@ -200,7 +200,7 @@ function writeToCSV_onlyComment(comment_array) {
         console.log(dataString);
 
         try {
-            if (isNaN(parseInt(number))) {
+            if (isNaN(parseInt(number)) || number[0]==" ") {
                 dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
                                 comment.from.id+"\"", "", "", "", "", 
                                 "\""+comment.message+"\"", "" , comment.created_time].join(",");
