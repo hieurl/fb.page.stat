@@ -190,6 +190,9 @@ function writeToCSV_onlyComment(comment_array) {
     comment_array.forEach(function(comment, index) {
         var number=comment.message.split(/[-]+/);
         number=number[number.length-1];
+        if (number[0] == " ") {
+            number="bullshitnumber";
+        }
 
         console.log(number);
         console.log(typeof(number));
@@ -200,7 +203,7 @@ function writeToCSV_onlyComment(comment_array) {
         console.log(dataString);
 
         try {
-            if (isNaN(parseInt(number)) || number[0]==" ") {
+            if (isNaN(parseInt(number))) {
                 dataString = ["\""+comment.from.name+"\"", "\"https://www.facebook.com/app_scoped_user_id/"+
                                 comment.from.id+"\"", "", "", "", "", 
                                 "\""+comment.message+"\"", "" , comment.created_time].join(",");
