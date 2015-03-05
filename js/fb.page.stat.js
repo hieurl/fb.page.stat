@@ -188,17 +188,8 @@ function writeToCSV_onlyComment(comment_array) {
     var lucky_number_array={};
 
     comment_array.forEach(function(comment, index) {
-        var number=comment.message.split(/[-]+/);
-        msg=number[number.length-2]
+        var number=comment.message.split(/[\ -]+/);
         number=number[number.length-1];
-        try {
-            if (number[0] == " " || msg[msg.length-1]==" ") {
-                number="bullshitnumber";
-            }
-        }
-        catch (err) {
-            console.log(err);
-        }
 
         console.log(number);
         console.log(typeof(number));
